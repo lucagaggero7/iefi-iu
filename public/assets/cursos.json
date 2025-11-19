@@ -1,0 +1,54 @@
+[
+    {
+        "id": 1,
+        "nombre": "Python Básico"
+    },
+    {
+        "id": 2,
+        "nombre": "Python Avanzado"
+    },
+    {
+        "id": 3,
+        "nombre": "JavaScript Nivel I"
+    },
+    {
+        "id": 4,
+        "nombre": "JavaScript Nivel II"
+    },
+    {
+        "id": 5,
+        "nombre": "Node.js Backend"
+    },
+    {
+        "id": 6,
+        "nombre": "Angular Frontend"
+    },
+    {
+        "id": 7,
+        "nombre": "SQL y Bases de Datos"
+    },
+    {
+        "id": 8,
+        "nombre": "Introducción a la Inteligencia Artificial"
+    },
+    {
+        "id": 9,
+        "nombre": "Machine Learning Básico"
+    },
+    {
+        "id": 10,
+        "nombre": "Machine Learning Avanzado"
+    },
+    {
+        "id": 11,
+        "nombre": "Redes Neuronales"
+    },
+    {
+        "id": 12,
+        "nombre": "IA Generativa para Principiantes"
+    },
+    {
+        "id": 13,
+        "nombre": "Chatbots e Interfaces con IA"
+    }
+]

@@ -19,20 +19,48 @@ interface MenuItem {
 })
 export class Web1Component {
 
-  menuItems: MenuItem[] = [
-    { id: 'empanadas', label: 'Empanadas', price: 1800, quantity: 0 },
-    { id: 'milanesa', label: 'Milanesa con papas', price: 3500, quantity: 0 },
-    { id: 'choripan', label: 'Choripán', price: 2200, quantity: 0 },
-    { id: 'lomito', label: 'Lomito completo', price: 4200, quantity: 0 },
-    { id: 'asado', label: 'Asado porción', price: 5000, quantity: 0 },
-    { id: 'fideos', label: 'Fideos con tuco', price: 2500, quantity: 0 },
-    { id: 'agua', label: 'Agua mineral', price: 1000, quantity: 0 },
-    { id: 'gaseosa', label: 'Gaseosa 500ml', price: 1500, quantity: 0 },
-    { id: 'cerveza', label: 'Cerveza Quilmes', price: 2500, quantity: 0 },
-    { id: 'vino', label: 'Vino tinto (copa)', price: 3000, quantity: 0 },
-    { id: 'flan', label: 'Flan con dulce', price: 1800, quantity: 0 }
+  menu = [
+    {
+      categoria: 'Entradas',
+      abierta: false,
+      items: [
+        { id: 'empanadas', label: 'Empanadas', price: 1800, quantity: 0 },
+        { id: 'choripan', label: 'Choripán', price: 2200, quantity: 0 }
+      ]
+    },
+    {
+      categoria: 'Platos principales',
+      abierta: false,
+      items: [
+        { id: 'milanesa', label: 'Milanesa con papas', price: 3500, quantity: 0 },
+        { id: 'lomito', label: 'Lomito completo', price: 4200, quantity: 0 },
+        { id: 'asado', label: 'Asado porción', price: 5000, quantity: 0 },
+        { id: 'fideos', label: 'Fideos con tuco', price: 2500, quantity: 0 }
+      ]
+    },
+    {
+      categoria: 'Bebidas',
+      abierta: false,
+      items: [
+        { id: 'agua', label: 'Agua mineral', price: 1000, quantity: 0 },
+        { id: 'gaseosa', label: 'Gaseosa 500ml', price: 1500, quantity: 0 },
+        { id: 'cerveza', label: 'Cerveza Quilmes', price: 2500, quantity: 0 },
+        { id: 'vino', label: 'Vino tinto (copa)', price: 3000, quantity: 0 }
+      ]
+    },
+    {
+      categoria: 'Postres',
+      abierta: false,
+      items: [
+        { id: 'flan', label: 'Flan con dulce', price: 1800, quantity: 0 }
+      ]
+    }
   ];
 
+  // ✓ Aplana todas las categorías en una sola lista como antes
+  get menuItems(): MenuItem[] {
+    return this.menu.flatMap(c => c.items);
+  }
 
   readonly IMPUESTO_TASA = 0.18;
 
@@ -46,7 +74,7 @@ export class Web1Component {
   calcularTotales(): void {
     let total = 0;
 
-    this.menuItems.forEach(item => {
+    this.menuItems.forEach((item: MenuItem) => {
       const cant = item.quantity || 0;
       total += cant * item.price;
     });
@@ -56,7 +84,10 @@ export class Web1Component {
   }
 
   abrirResumen(): void {
-    const totalCantidades = this.menuItems.reduce((acc, item) => acc + (item.quantity || 0), 0);
+    const totalCantidades = this.menuItems.reduce(
+      (acc: number, item: MenuItem) => acc + (item.quantity || 0),
+      0
+    );
 
     if (totalCantidades === 0) {
       this.mensajeError = 'Ingrese un producto';
@@ -78,12 +109,16 @@ export class Web1Component {
   }
 
   limpiar(): void {
-    this.menuItems.forEach(i => i.quantity = 0);
+    this.menuItems.forEach((i: MenuItem) => i.quantity = 0);
     this.totalVenta = 0;
     this.totalImpuesto = 0;
   }
 
   get gananciaNeta(): number {
     return this.totalVenta - this.totalImpuesto;
+  }
+
+  toggleCategoria(cat: any) {
+    cat.abierta = !cat.abierta;
   }
 }

@@ -11,26 +11,38 @@
 
             <form (ngSubmit)="abrirResumen()" (reset)="limpiar()">
 
-                <table class="modern-table">
-                    <thead>
-                        <tr>
-                            <th>Ítem</th>
-                            <th>Precio</th>
-                            <th>Cantidad</th>
-                        </tr>
-                    </thead>
+                <div class="categoria" *ngFor="let cat of menu">
 
-                    <tbody>
-                        <tr *ngFor="let item of menuItems">
-                            <td>{{ item.label }}</td>
-                            <td>$ {{ item.price | number:'1.2-2' }}</td>
-                            <td>
-                                <input type="number" [(ngModel)]="item.quantity" name="{{ item.id }}" min="0"
-                                    class="input-field" placeholder="0">
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                    <!-- Encabezado de categoría -->
+                    <div class="categoria-header" (click)="toggleCategoria(cat)">
+                        <span>{{ cat.categoria }}</span>
+                        <i class="arrow" [class.open]="cat.abierta">▼</i>
+                    </div>
+
+                    <!-- Tabla interna -->
+                    <table class="modern-table" *ngIf="cat.abierta">
+                        <thead>
+                            <tr>
+                                <th>Ítem</th>
+                                <th>Precio</th>
+                                <th>Cantidad</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr *ngFor="let item of cat.items">
+                                <td>{{ item.label }}</td>
+                                <td>$ {{ item.price | number:'1.2-2' }}</td>
+                                <td>
+                                    <input type="number" [(ngModel)]="item.quantity" name="{{ item.id }}" min="0"
+                                        class="input-field" placeholder="0">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
 
                 <div class="actions">
                     <button type="submit" class="btn btn-primary">Calcular</button>

@@ -1,5 +1,10 @@
 /* ===== SIDE MENU ===== */
 
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
 .side-menu {
     width: 230px;
     background: #ffffff;

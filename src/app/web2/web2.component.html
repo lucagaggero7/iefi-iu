@@ -1,191 +1,161 @@
-<!DOCTYPE html>
-<html lang="es">
+<div class="layout">
+    <app-side-menu></app-side-menu>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Matrícula</title>
-</head>
+    <div class="page-wrapper">
+        <div class="card">
+            <div class="logo-container">
+                <img src="/Zetta.jpg" alt="Logo Zetta" class="logo-img">
+            </div>
 
-<body>
-    <div class="container">
-        <div class="header">
-            <span class="header-icon">📚</span>
-            <h1>Formulario de matriculación Zetta</h1>
-        </div>
+            <div class="header">
+                <span class="header-icon">📚</span>
+                <h1>Formulario de matriculación</h1>
+            </div>
 
-        <div class="content">
-            <div class="form-section">
-                <div class="section-title">Ingreso de Datos</div>
+            <!-- Error banner -->
+            <div class="error-banner" *ngIf="errorMsg">
+                {{ errorMsg }}
+            </div>
 
+            <form [formGroup]="form" (ngSubmit)="addMatricula()">
                 <div class="form-grid">
                     <div class="form-group">
-                        <label for="curso">Curso:</label>
-                        <select id="curso">
-                            <option value="">Seleccione un curso</option>
-                            <option value="Python Básico">Python Básico</option>
-                            <option value="Python Avanzado">Python Avanzado</option>
-                            <option value="JavaScript Nivel I">JavaScript Nivel I</option>
-                            <option value="JavaScript Nivel II">JavaScript Nivel II</option>
-                            <option value="React Development">React Development</option>
-                            <option value="Node.js Backend">Node.js Backend</option>
-                            <option value="SQL y Bases de Datos">SQL y Bases de Datos</option>
-                            <option value="Java Nivel I">Java Nivel I</option>
-                            <option value="Java Nivel II">Java Nivel II</option>
+                        <label for="curso">Curso</label>
+                        <select id="curso" formControlName="curso">
+                            <option value="">Seleccioná un curso</option>
+                            <option *ngFor="let c of cursos" [value]="c.nombre">{{ c.nombre }}</option>
                         </select>
+                        <small class="error" *ngIf="required('curso')">El curso es obligatorio</small>
                     </div>
 
                     <div class="form-group">
-                        <label for="fecha">Fecha de matrícula:</label>
-                        <input type="date" id="fecha">
+                        <label for="fecha">Fecha de matrícula</label>
+                        <input id="fecha" type="date" formControlName="fecha">
+                        <small class="error" *ngIf="required('fecha')">La fecha es obligatoria</small>
                     </div>
 
                     <div class="form-group">
-                        <label for="alumno">Alumno:</label>
-                        <input type="text" id="alumno" placeholder="Apellidos y nombres">
+                        <label for="alumno">Alumno</label>
+                        <input id="alumno" type="text" placeholder="Apellidos y nombres" formControlName="alumno">
+                        <small class="error" *ngIf="required('alumno')">El nombre es obligatorio</small>
+                        <small class="error" *ngIf="minLen('alumno', 3)">Mínimo 3 caracteres</small>
                     </div>
 
                     <div class="form-group">
-                        <label>Sexo:</label>
+                        <label>Sexo</label>
                         <div class="radio-group">
-                            <div class="radio-option">
-                                <input type="radio" id="masculino" name="sexo" value="Masculino">
-                                <label for="masculino">Masculino</label>
-                            </div>
-                            <div class="radio-option">
-                                <input type="radio" id="femenino" name="sexo" value="Femenino">
-                                <label for="femenino">Femenino</label>
-                            </div>
+                            <label class="radio-option"><input type="radio" value="Masculino" formControlName="sexo">
+                                Masculino</label>
+                            <label class="radio-option"><input type="radio" value="Femenino" formControlName="sexo">
+                                Femenino</label>
                         </div>
+                        <small class="error" *ngIf="required('sexo')">Seleccioná una opción</small>
                     </div>
 
                     <div class="form-group">
-                        <label for="direccion">Dirección:</label>
-                        <input type="text" id="direccion" placeholder="Ingrese su dirección">
+                        <label for="direccion">Dirección</label>
+                        <input id="direccion" type="text" placeholder="Ingrese su dirección"
+                            formControlName="direccion">
+                        <small class="error" *ngIf="required('direccion')">La dirección es obligatoria</small>
                     </div>
 
                     <div class="form-group">
-                        <label for="distrito">Provincia:</label>
-                        <select id="distrito">
-                            <option value="">Seleccione una provincia</option>
-                            <option value="Buenos Aires">Buenos Aires</option>
-                            <option value="CABA">CABA</option>
-                            <option value="Chubut">Chubut</option>
-                            <option value="Corrientes">Corrientes</option>
-                            <option value="Córdoba">Córdoba</option>
-                            <option value="Entre Ríos">Entre Ríos</option>
-                            <option value="Jujuy">Jujuy</option>
-                            <option value="La Rioja">La Rioja</option>
-                            <option value="Mendoza">Mendoza</option>
-                            <option value="Misiones">Misiones</option>
-                            <option value="Neuquén">Neuquén</option>
-                            <option value="Río Negro">Río Negro</option>
-                            <option value="Salta">Salta</option>
-                            <option value="San Luis">San Luis</option>
-                            <option value="Santa Fe">Santa Fe</option>
-                            <option value="Tierra del Fuego">Tierra del Fuego</option>
+                        <label for="provincia">Provincia</label>
+                        <select id="provincia" formControlName="provincia">
+                            <option value="">Seleccioná una provincia</option>
+                            <option>Buenos Aires</option>
+                            <option>CABA</option>
+                            <option>Chubut</option>
+                            <option>Corrientes</option>
+                            <option>Córdoba</option>
+                            <option>Entre Ríos</option>
+                            <option>Jujuy</option>
+                            <option>La Rioja</option>
+                            <option>Mendoza</option>
+                            <option>Misiones</option>
+                            <option>Neuquén</option>
+                            <option>Río Negro</option>
+                            <option>Salta</option>
+                            <option>San Luis</option>
+                            <option>Santa Fe</option>
+                            <option>Tierra del Fuego</option>
                         </select>
+                        <small class="error" *ngIf="required('provincia')">La provincia es obligatoria</small>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn-primary" type="submit" [disabled]="form.invalid">💾 Guardar</button>
+                    <button class="btn-secondary" type="button" (click)="resetForm()">🔄 Limpiar</button>
+
+                    <button class="btn-success" type="button" (click)="mostrarTabla = !mostrarTabla">📋 Ver
+                        Matrículas</button>
+                </div>
+            </form>
+
+            <!-- Tabla de matriculas -->
+            <section *ngIf="mostrarTabla" class="table-section">
+                <div class="table-header">
+                    <h3>Matriculas registradas ({{ matriculas.length }})</h3>
+                    <div class="export-buttons">
+                        <button class="btn-secondary" (click)="exportExcel()">Exportar Excel</button>
+                        <button class="btn-secondary" (click)="exportPDF()">Exportar PDF</button>
+                    </div>
+                </div>
+
+                <table class="modern-table" *ngIf="matriculas.length > 0; else noData">
+                    <thead>
+                        <tr>
+                            <th>Alumno</th>
+                            <th>Curso</th>
+                            <th>Fecha</th>
+                            <th>Sexo</th>
+                            <th>Provincia</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let m of matriculas">
+                            <td>{{ m.alumno }}</td>
+                            <td>{{ m.curso }}</td>
+                            <td>{{ m.fecha }}</td>
+                            <td>{{ m.sexo }}</td>
+                            <td>{{ m.provincia }}</td>
+                            <td>
+                                <button class="btn btn-primary" (click)="editarMatricula(m.id)">Editar</button>
+                                <button class="btn btn-secondary" (click)="eliminarMatricula(m.id)">Eliminar</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <ng-template #noData>
+                    <div class="empty">No hay matrículas registradas</div>
+                </ng-template>
+            </section>
+
+            <!-- MODAL (confirm / info / error) -->
+            <div class="modal-backdrop" *ngIf="showConfirmModal">
+                <div class="modal" [ngClass]="{'modal-error': modalType === 'error'}">
+                    <h2 *ngIf="modalType === 'error'" class="error-title">Error</h2>
+                    <h2 *ngIf="modalType === 'info'">Información</h2>
+                    <h2 *ngIf="modalType === 'confirm'">Confirmación</h2>
+
+                    <div class="modal-row">
+                        <span>{{ confirmMessage }}</span>
+                    </div>
+
+                    <div class="modal-actions" *ngIf="modalType === 'confirm'">
+                        <button class="btn btn-secondary modal-btn" (click)="onModalConfirm(false)">Cancelar</button>
+                        <button class="btn btn-primary modal-btn" (click)="onModalConfirm(true)">Aceptar</button>
+                    </div>
+
+                    <div *ngIf="modalType !== 'confirm'">
+                        <button class="btn btn-primary modal-btn" (click)="onModalConfirm(true)">Aceptar</button>
                     </div>
                 </div>
             </div>
 
-            <div class="button-group">
-                <button class="btn-primary" onclick="guardarMatricula()">💾 Guardar</button>
-                <button class="btn-secondary" onclick="limpiarFormulario()">🔄 Limpiar</button>
-                <button class="btn-danger" onclick="cancelar()">❌ Cancelar</button>
-                <button class="btn-success" onclick="mostrarMatriculas()">📋 Ver Matrículas</button>
-            </div>
         </div>
     </div>
-
-    <script>
-        document.getElementById('fecha').valueAsDate = new Date();
-
-        let matriculas = [];
-
-        function guardarMatricula() {
-            const curso = document.getElementById('curso').value;
-            const fecha = document.getElementById('fecha').value;
-            const alumno = document.getElementById('alumno').value;
-            const sexo = document.querySelector('input[name="sexo"]:checked');
-            const direccion = document.getElementById('direccion').value;
-            const distrito = document.getElementById('distrito').value;
-
-            if (!curso) {
-                alert('Por favor, seleccione un curso');
-                return;
-            }
-            if (!fecha) {
-                alert('Por favor, ingrese la fecha de matrícula');
-                return;
-            }
-            if (!alumno) {
-                alert('Por favor, ingrese el nombre del alumno');
-                return;
-            }
-            if (!sexo) {
-                alert('Por favor, seleccione el sexo');
-                return;
-            }
-            if (!direccion) {
-                alert('Por favor, ingrese la dirección');
-                return;
-            }
-            if (!distrito) {
-                alert('Por favor, seleccione un distrito');
-                return;
-            }
-
-            const matricula = {
-                curso,
-                fecha,
-                alumno,
-                sexo: sexo.value,
-                direccion,
-                distrito
-            };
-
-            matriculas.push(matricula);
-            alert('✅ Matrícula guardada exitosamente');
-            limpiarFormulario();
-        }
-
-        function limpiarFormulario() {
-            document.getElementById('curso').value = '';
-            document.getElementById('fecha').valueAsDate = new Date();
-            document.getElementById('alumno').value = '';
-            document.querySelectorAll('input[name="sexo"]').forEach(r => r.checked = false);
-            document.getElementById('direccion').value = '';
-            document.getElementById('distrito').value = '';
-        }
-
-        function cancelar() {
-            if (confirm('¿Está seguro que desea cancelar? Se perderán los datos no guardados.')) {
-                limpiarFormulario();
-            }
-        }
-
-        function mostrarMatriculas() {
-            if (matriculas.length === 0) {
-                alert('No hay matrículas registradas');
-                return;
-            }
-
-            let mensaje = '📋 MATRÍCULAS REGISTRADAS:\n\n';
-            matriculas.forEach((m, index) => {
-                mensaje += `#${index + 1}\n`;
-                mensaje += `Curso: ${m.curso}\n`;
-                mensaje += `Fecha: ${m.fecha}\n`;
-                mensaje += `Alumno: ${m.alumno}\n`;
-                mensaje += `Sexo: ${m.sexo}\n`;
-                mensaje += `Dirección: ${m.direccion}\n`;
-                mensaje += `Distrito: ${m.distrito}\n`;
-                mensaje += '\n-------------------\n\n';
-            });
-
-            alert(mensaje);
-        }
-    </script>
-</body>
-
-</html>
+</div>

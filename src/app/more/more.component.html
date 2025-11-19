@@ -1,0 +1,40 @@
+<div class="main-container">
+    <app-side-menu></app-side-menu>
+
+    <div class="content-container">
+        <header>
+            <h1>Más sobre Zetta Servicios IT</h1>
+            <p>
+                Somos Zetta, expertos en soluciones de software para empresas y organizaciones. Brindamos herramientas
+                que optimizan procesos, mejoran la experiencia de tus clientes y aumentan la eficiencia de tu equipo.
+            </p>
+        </header>
+
+        <section class="servicios">
+            <h2>Nuestros servicios</h2>
+            <div class="cards">
+                <div class="card" *ngFor="let s of servicios">
+                    <div class="icon">{{ s.icon }}</div>
+                    <h3>{{ s.title }}</h3>
+                    <p>{{ s.desc }}</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="mision">
+            <h2>Nuestra misión</h2>
+            <p>
+                Ayudar a empresas de todos los tamaños a digitalizar sus procesos y brindar experiencias más
+                inteligentes a sus clientes.
+            </p>
+        </section>
+
+        <section class="vision">
+            <h2>Nuestra visión</h2>
+            <p>
+                Ser referentes en soluciones de software innovadoras y confiables, apoyando el crecimiento de negocios
+                en todo el país.
+            </p>
+        </section>
+    </div>
+</div>

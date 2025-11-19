@@ -17,6 +17,11 @@ export const routes: Routes = [
         loadComponent: () =>
             import('./web2/web2.component').then(m => m.Web2Component)
     },
+    {
+        path: 'more',
+        loadComponent: () =>
+            import('./more/more.component').then(m => m.MoreComponent)
+    },
 
 ];
 

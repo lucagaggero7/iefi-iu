@@ -245,3 +245,33 @@ app-side-menu {
     /* para no tapar el contenido */
     width: calc(100% - 230px);
 }
+
+.categoria {
+    margin-bottom: 18px;
+}
+
+.categoria-header {
+    background: #f0f0f0;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s ease;
+}
+
+.categoria-header:hover {
+    background: #e2e2e2;
+}
+
+.arrow {
+    transition: transform 0.3s ease;
+    font-size: 14px;
+}
+
+.arrow.open {
+    transform: rotate(180deg);
+}
