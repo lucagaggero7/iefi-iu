@@ -1,0 +1,85 @@
+<div class="layout">
+    <app-side-menu></app-side-menu>
+
+    <div class="page-wrapper">
+        <div class="card">
+            <div class="logo-container">
+                <img src="/Zetta.jpg" alt="Logo Zetta" class="logo-img">
+            </div>
+            <h1 class="title">Restaurante Zetta</h1>
+            <p class="subtitle">Cierre de ventas del día</p>
+
+            <form (ngSubmit)="abrirResumen()" (reset)="limpiar()">
+
+                <table class="modern-table">
+                    <thead>
+                        <tr>
+                            <th>Ítem</th>
+                            <th>Precio</th>
+                            <th>Cantidad</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr *ngFor="let item of menuItems">
+                            <td>{{ item.label }}</td>
+                            <td>$ {{ item.price | number:'1.2-2' }}</td>
+                            <td>
+                                <input type="number" [(ngModel)]="item.quantity" name="{{ item.id }}" min="0"
+                                    class="input-field" placeholder="0">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="actions">
+                    <button type="submit" class="btn btn-primary">Calcular</button>
+                    <button type="reset" class="btn btn-secondary">Limpiar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- ===========================
+        MODAL DE RESUMEN
+=========================== -->
+    <div class="modal-backdrop" *ngIf="mostrarModal">
+        <div class="modal">
+            <h2>Resumen de Ventas</h2>
+
+            <div class="modal-row">
+                <span>Total Venta:</span>
+                <strong>$ {{ totalVenta | number:'1.2-2' }}</strong>
+            </div>
+
+            <div class="modal-row">
+                <span>Impuesto (18%):</span>
+                <strong>$ {{ totalImpuesto | number:'1.2-2' }}</strong>
+            </div>
+
+            <div class="modal-row">
+                <span>Ganancia Neta:</span>
+                <strong>$ {{ gananciaNeta | number:'1.2-2' }}</strong>
+            </div>
+
+            <button class="btn btn-primary modal-btn" (click)="cerrarModal()">Aceptar</button>
+        </div>
+    </div>
+
+
+    <!-- ===========================
+        MODAL DE ERROR
+=========================== -->
+    <div class="modal-backdrop" *ngIf="mostrarModalError">
+        <div class="modal modal-error">
+            <h2 class="error-title">Error</h2>
+
+            <div class="modal-row error-text">
+                <strong>{{ mensajeError }}</strong>
+            </div>
+
+            <button class="btn modal-btn error-btn" (click)="cerrarModalError()">Aceptar</button>
+        </div>
+    </div>
+</div>

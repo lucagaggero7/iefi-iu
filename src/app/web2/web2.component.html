@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Matrícula</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <span class="header-icon">📚</span>
+            <h1>Formulario de matriculación Zetta</h1>
+        </div>
+
+        <div class="content">
+            <div class="form-section">
+                <div class="section-title">Ingreso de Datos</div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="curso">Curso:</label>
+                        <select id="curso">
+                            <option value="">Seleccione un curso</option>
+                            <option value="Python Básico">Python Básico</option>
+                            <option value="Python Avanzado">Python Avanzado</option>
+                            <option value="JavaScript Nivel I">JavaScript Nivel I</option>
+                            <option value="JavaScript Nivel II">JavaScript Nivel II</option>
+                            <option value="React Development">React Development</option>
+                            <option value="Node.js Backend">Node.js Backend</option>
+                            <option value="SQL y Bases de Datos">SQL y Bases de Datos</option>
+                            <option value="Java Nivel I">Java Nivel I</option>
+                            <option value="Java Nivel II">Java Nivel II</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fecha">Fecha de matrícula:</label>
+                        <input type="date" id="fecha">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="alumno">Alumno:</label>
+                        <input type="text" id="alumno" placeholder="Apellidos y nombres">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Sexo:</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="masculino" name="sexo" value="Masculino">
+                                <label for="masculino">Masculino</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="femenino" name="sexo" value="Femenino">
+                                <label for="femenino">Femenino</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="direccion">Dirección:</label>
+                        <input type="text" id="direccion" placeholder="Ingrese su dirección">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="distrito">Provincia:</label>
+                        <select id="distrito">
+                            <option value="">Seleccione una provincia</option>
+                            <option value="Buenos Aires">Buenos Aires</option>
+                            <option value="CABA">CABA</option>
+                            <option value="Chubut">Chubut</option>
+                            <option value="Corrientes">Corrientes</option>
+                            <option value="Córdoba">Córdoba</option>
+                            <option value="Entre Ríos">Entre Ríos</option>
+                            <option value="Jujuy">Jujuy</option>
+                            <option value="La Rioja">La Rioja</option>
+                            <option value="Mendoza">Mendoza</option>
+                            <option value="Misiones">Misiones</option>
+                            <option value="Neuquén">Neuquén</option>
+                            <option value="Río Negro">Río Negro</option>
+                            <option value="Salta">Salta</option>
+                            <option value="San Luis">San Luis</option>
+                            <option value="Santa Fe">Santa Fe</option>
+                            <option value="Tierra del Fuego">Tierra del Fuego</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn-primary" onclick="guardarMatricula()">💾 Guardar</button>
+                <button class="btn-secondary" onclick="limpiarFormulario()">🔄 Limpiar</button>
+                <button class="btn-danger" onclick="cancelar()">❌ Cancelar</button>
+                <button class="btn-success" onclick="mostrarMatriculas()">📋 Ver Matrículas</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('fecha').valueAsDate = new Date();
+
+        let matriculas = [];
+
+        function guardarMatricula() {
+            const curso = document.getElementById('curso').value;
+            const fecha = document.getElementById('fecha').value;
+            const alumno = document.getElementById('alumno').value;
+            const sexo = document.querySelector('input[name="sexo"]:checked');
+            const direccion = document.getElementById('direccion').value;
+            const distrito = document.getElementById('distrito').value;
+
+            if (!curso) {
+                alert('Por favor, seleccione un curso');
+                return;
+            }
+            if (!fecha) {
+                alert('Por favor, ingrese la fecha de matrícula');
+                return;
+            }
+            if (!alumno) {
+                alert('Por favor, ingrese el nombre del alumno');
+                return;
+            }
+            if (!sexo) {
+                alert('Por favor, seleccione el sexo');
+                return;
+            }
+            if (!direccion) {
+                alert('Por favor, ingrese la dirección');
+                return;
+            }
+            if (!distrito) {
+                alert('Por favor, seleccione un distrito');
+                return;
+            }
+
+            const matricula = {
+                curso,
+                fecha,
+                alumno,
+                sexo: sexo.value,
+                direccion,
+                distrito
+            };
+
+            matriculas.push(matricula);
+            alert('✅ Matrícula guardada exitosamente');
+            limpiarFormulario();
+        }
+
+        function limpiarFormulario() {
+            document.getElementById('curso').value = '';
+            document.getElementById('fecha').valueAsDate = new Date();
+            document.getElementById('alumno').value = '';
+            document.querySelectorAll('input[name="sexo"]').forEach(r => r.checked = false);
+            document.getElementById('direccion').value = '';
+            document.getElementById('distrito').value = '';
+        }
+
+        function cancelar() {
+            if (confirm('¿Está seguro que desea cancelar? Se perderán los datos no guardados.')) {
+                limpiarFormulario();
+            }
+        }
+
+        function mostrarMatriculas() {
+            if (matriculas.length === 0) {
+                alert('No hay matrículas registradas');
+                return;
+            }
+
+            let mensaje = '📋 MATRÍCULAS REGISTRADAS:\n\n';
+            matriculas.forEach((m, index) => {
+                mensaje += `#${index + 1}\n`;
+                mensaje += `Curso: ${m.curso}\n`;
+                mensaje += `Fecha: ${m.fecha}\n`;
+                mensaje += `Alumno: ${m.alumno}\n`;
+                mensaje += `Sexo: ${m.sexo}\n`;
+                mensaje += `Dirección: ${m.direccion}\n`;
+                mensaje += `Distrito: ${m.distrito}\n`;
+                mensaje += '\n-------------------\n\n';
+            });
+
+            alert(mensaje);
+        }
+    </script>
+</body>
+
+</html>

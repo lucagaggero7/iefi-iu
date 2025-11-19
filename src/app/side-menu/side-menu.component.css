@@ -1,0 +1,95 @@
+/* ===== SIDE MENU ===== */
+
+.side-menu {
+    width: 230px;
+    background: #ffffff;
+    border-right: 1px solid #e1e1e1;
+    padding: 25px 15px;
+    min-height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    transition: background 0.3s ease;
+}
+
+/* LOGO */
+.menu-header {
+    text-align: center;
+}
+
+.menu-logo {
+    width: 80px;
+    border-radius: 12px;
+    margin-bottom: 8px;
+}
+
+/* ITEMS */
+.menu-list {
+    list-style: none;
+    padding: 0;
+}
+
+.menu-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+
+    transition: background 0.25s, transform 0.2s;
+}
+
+.menu-list li:hover {
+    background: #f1f1f1;
+    transform: translateX(4px);
+}
+
+/* ICONOS */
+.icon {
+    width: 20px;
+    height: 20px;
+}
+
+/* ACTIVE ROUTE */
+.active {
+    background: #4a90e23b !important;
+    border-left: 4px solid #4a90e2;
+}
+
+/* DARK MODE */
+@media (prefers-color-scheme: dark) {
+    .side-menu {
+        background: #222;
+        border-right: 1px solid #444;
+    }
+
+    .menu-list li:hover {
+        background: #333;
+    }
+
+    .active {
+        background: #4a90e245 !important;
+    }
+
+    .menu-list span {
+        color: #f2f2f2;
+    }
+
+    .menu-header h3 {
+        color: #f5f5f5;
+    }
+}
+
+/* RESPONSIVE (móvil) */
+@media (max-width: 768px) {
+    .side-menu {
+        width: 190px;
+    }
+}
